@@ -182,9 +182,8 @@ Function Get-EphemeralPortStats
 }
 
 $oPortStats = Get-EphemeralPortStats
-#$oPortStats | Select-Object Computer, DateTime, LocalAddress, InUse, Max, Percent, Listening | Format-Table -AutoSize
-$iCount = @($oPortStats | Where-Object {$_.Percent -ge 10}).Count
-$overtenpercent = $oPortStats | Where-Object {$_.Percent -ge 10}
+$iCount = @($oPortStats | Where-Object {$_.Percent -ge $percent}).Count
+$overtenpercent = $oPortStats | Where-Object {$_.Percent -ge $percent}
 If ($iCount -gt 0)
 {
 	$oPortStats | Select-Object Computer, DateTime, LocalAddress, InUse, Max, Percent, Listening | Format-Table -AutoSize >> $OutputFilePath
@@ -205,5 +204,5 @@ If ($iCount -gt 0)
     }
 }
 else {
-	Write-Output "SUCCESS: TCP ephemeral port usage below 10% on all interfaces"
+	Write-Output "SUCCESS: TCP ephemeral port usage below $percent% on all interfaces"
 }
